@@ -4,6 +4,7 @@ import './App.css';
 import Web3 from 'web3';
 import Navbar from './Navbar';
 import Marketplace from '../abis/Marketplace.json'
+import Main from './Main'
 
 class App extends Component {
 
@@ -40,6 +41,10 @@ class App extends Component {
     {
       const marketplace = web3.eth.Contract(Marketplace.abi, networkData.address)
       console.log(marketplace)
+      this.setState({ marketplace })
+      const productCount = await marketplace.methods.productCount().call()
+      console.log(productCount.toString())
+      this.setState({ loading: false})
     }
     else {
       window.alert('MarketPlace contract not deployed on detected network')
@@ -54,11 +59,28 @@ class App extends Component {
       products: [],
       loading: true
     }
+    this.createProduct = this.createProduct.bind(this)
+  }
+
+  createProduct(name,price) {
+    this.setState({ loading: true })
+    this.state.marketplace.methods.createProduct(name,price).send ({ from: this.state.account })
+    .once('receipt', (receipt) => {
+      this.setState({ loading : false })
+    })
   }
 
   render() {
     return (
+      <div>
         < Navbar account = {this.state.account} />
+        <main role="main" className="col-lg-12 d-flex">
+          { this.state.loading
+            ? <div id="loader" className="text-center"><p className="text-center">Loading...</p></div>
+            : <Main createProduct={this.createProduct} />
+          }
+        </main>
+      </div>
     );
   }
 }
