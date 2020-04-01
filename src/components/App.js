@@ -49,6 +49,16 @@ class App extends Component {
     else {
       window.alert('MarketPlace contract not deployed on detected network')
     }
+
+    const productCount = await Marketplace.methods.productCount().call()
+    this.setState({ productCount })
+    for(var i=1; i <= productCount;i++) {
+      const product = await Marketplace.methods.product(i).call()
+      this.setState({
+        products : [...this.state.products, product]
+      })
+    }
+
   }
 
   constructor(props) {
@@ -65,6 +75,14 @@ class App extends Component {
   createProduct(name,price) {
     this.setState({ loading: true })
     this.state.marketplace.methods.createProduct(name,price).send ({ from: this.state.account })
+    .once('receipt', (receipt) => {
+      this.setState({ loading : false })
+    })
+  }
+
+  purchaseProduct(id, price) {
+    this.setState({ loading : true})
+    this.state.marketplace.methods.purchaseProduct(id).send({ from:this.state.account, value : price })
     .once('receipt', (receipt) => {
       this.setState({ loading : false })
     })
