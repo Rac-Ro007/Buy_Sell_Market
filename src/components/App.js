@@ -70,6 +70,7 @@ class App extends Component {
       loading: true
     }
     this.createProduct = this.createProduct.bind(this)
+    this.purchaseProduct = this.purchaseProduct.bind(this)
   }
 
   createProduct(name,price) {
@@ -95,7 +96,11 @@ class App extends Component {
         <main role="main" className="col-lg-12 d-flex">
           { this.state.loading
             ? <div id="loader" className="text-center"><p className="text-center">Loading...</p></div>
-            : <Main createProduct={this.createProduct} />
+            : <Main 
+              product = {this.product}
+              createProduct = {this.createProduct} 
+              purchaseProduct ={this.purchaseProduct}
+              />
           }
         </main>
       </div>
