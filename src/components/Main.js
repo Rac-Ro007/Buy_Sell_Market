@@ -4,7 +4,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="content" align="center" style="margin:auto; padding:auto;">
+      <div id="content" align="center">
         <h1>Add Product</h1>
         <form onSubmit={(event) => {
           event.preventDefault()
