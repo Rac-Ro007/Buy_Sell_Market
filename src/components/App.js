@@ -44,20 +44,20 @@ class App extends Component {
       this.setState({ marketplace })
       const productCount = await marketplace.methods.productCount().call()
       console.log(productCount.toString())
-      this.setState({ loading: false})
+      this.setState({ productCount })
+      for(var i=1; i <= productCount;i++) {
+        const product = await marketplace.methods.products(i).call()
+        this.setState({
+          products : [...this.state.products, product]
+        })
+      }
+      this.setState({ loading: false })
     }
     else {
       window.alert('MarketPlace contract not deployed on detected network')
     }
 
-    const productCount = await Marketplace.methods.productCount().call()
-    this.setState({ productCount })
-    for(var i=1; i <= productCount;i++) {
-      const product = await Marketplace.methods.product(i).call()
-      this.setState({
-        products : [...this.state.products, product]
-      })
-    }
+    
 
   }
 
@@ -97,7 +97,7 @@ class App extends Component {
           { this.state.loading
             ? <div id="loader" className="text-center"><p className="text-center">Loading...</p></div>
             : <Main 
-              product = {this.product}
+              products = {this.state.products}
               createProduct = {this.createProduct} 
               purchaseProduct ={this.purchaseProduct}
               />
