@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Marketplace from '../abis/Marketplace.json'
 import Main from './Main'
 
+
 class App extends Component {
 
   async componentWillMount(){
@@ -109,3 +110,4 @@ class App extends Component {
 }
 
 export default App;
+
