@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from "react-router";
+import { BrowserRouter as Router,Route, Link } from "react-router-dom";
   
 
 class Navbar extends Component {
@@ -15,6 +15,7 @@ class Navbar extends Component {
                 >
                 DeFleet Dapp Marketplace
                 </a>
+                <Router>
                 <ul className="navbar-nav px-3">
                 <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
                     <small className="text-white"><span id="account">{this.props.account}</span></small>
@@ -26,6 +27,7 @@ class Navbar extends Component {
                     <small className="text-white"><span id="st">Market</span></small>
                 </li>
                 </ul>
+                </Router>
             </nav>
          );
     }

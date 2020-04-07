@@ -5,6 +5,8 @@ import Web3 from 'web3';
 import Navbar from './Navbar';
 import Marketplace from '../abis/Marketplace.json'
 import Main from './Main'
+import Home from './Home'
+import { BrowserRouter as Router,Route, Link } from "react-router-dom";
 
 
 class App extends Component {
@@ -103,6 +105,7 @@ class App extends Component {
               purchaseProduct ={this.purchaseProduct}
               />
           }
+          <Route path="/Home" component={Home} />
         </main>
       </div>
     );

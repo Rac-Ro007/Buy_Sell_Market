@@ -10,9 +10,11 @@ class Home extends Component {
     render() {
       return (
          <div>
-            <h1>IPFS</h1>
+            <h1 style="color:blue;">IPFS</h1>
+            <hr width="100%" />
+
          </div>
-      )
+      );
    }
   }
   
