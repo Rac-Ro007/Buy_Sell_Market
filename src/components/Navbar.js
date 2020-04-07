@@ -15,19 +15,17 @@ class Navbar extends Component {
                 >
                 DeFleet Dapp Marketplace
                 </a>
-                <Router>
                 <ul className="navbar-nav px-3">
                 <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
                     <small className="text-white"><span id="account">{this.props.account}</span></small>
                 </li>
                 <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-                <Link to="/Home"><small className="text-white"><span id="ip">IPFS Storage</span></small></Link>
+                <small className="text-white"><span id="ip">IPFS Storage</span></small>
                 </li>
                 <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
                     <small className="text-white"><span id="st">Market</span></small>
                 </li>
                 </ul>
-                </Router>
             </nav>
          );
     }

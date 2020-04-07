@@ -6,7 +6,8 @@ import Navbar from './Navbar';
 import Marketplace from '../abis/Marketplace.json'
 import Main from './Main'
 import Home from './Home'
-import { BrowserRouter as Router,Route, Link } from "react-router-dom";
+import About from './About'
+import { BrowserRouter as Router,Route, Switch, Link } from "react-router-dom";
 
 
 class App extends Component {
@@ -95,8 +96,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        < Navbar account = {this.state.account} />
-        <main role="main" className="col-lg-12 d-flex">
+        <Router>
+        {/* <Switch> */}
+          < Navbar account = {this.state.account} />
+          <main role="main" className="col-lg-12 d-flex">
           { this.state.loading
             ? <div id="loader" className="text-center"><p className="text-center">Loading...</p></div>
             : <Main 
@@ -105,12 +108,22 @@ class App extends Component {
               purchaseProduct ={this.purchaseProduct}
               />
           }
-          <Route path="/Home" component={Home} />
         </main>
+          <Route path="/home" component={Home} />
+          {/* <Route path="/" exact component={work} /> */}
+          <Route path="/about" component={About} />
+        {/* </Switch> */}
+        </Router>
       </div>
     );
   }
 }
 
+const work = () => (
+  <div>
+    </div>
+);
+
 export default App;
+
 

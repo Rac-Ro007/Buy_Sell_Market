@@ -6,16 +6,14 @@ import Navbar from './Navbar';
 import Marketplace from '../abis/Marketplace.json'
 import Main from './Main'
 
-class Home extends Component {
-    render() {
+function Home () {
       return (
          <div>
-            <h1 style="color:blue;">IPFS</h1>
+            <h1>IPFS</h1>
             <hr width="100%" />
-
          </div>
+         
       );
-   }
   }
   
   export default Home;
