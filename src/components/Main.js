@@ -4,7 +4,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="container" style={{padding:100}}>
+      <div className="container" style={{padding:40}}>
       <div id="content" align="center">
         <h1>Add Product</h1>
         <form onSubmit={(event) => {
