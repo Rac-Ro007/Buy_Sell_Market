@@ -6,13 +6,18 @@ import Home from './components/Home';
 import About from './components/About';
 import * as serviceWorker from './serviceWorker';
 // import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { BrowserRouter as Router, Route, Link, browserHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, browserHistory, Switch } from 'react-router-dom'
 
 
 
 ReactDOM.render(
         <Router>
-            <App />
+            <Switch>
+            {/* <App /> */}
+          <Route path="/" exact component={App} />
+          <Route path="/home" component={Home} />
+          <Route path="/about" component={About} />
+          </Switch>
         </Router>, document.getElementById('root')
      );
 
