@@ -19,7 +19,7 @@ ReactDOM.render(
           <Route path="/about" component={About} />
           </Switch>
         </Router>, document.getElementById('root')
-     );
+     ); 
 
 // ReactDOM.render(
 //     <Router history = {browserHistory}>

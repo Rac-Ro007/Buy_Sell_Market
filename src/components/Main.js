@@ -4,6 +4,7 @@ class Main extends Component {
 
   render() {
     return (
+      <div className="container" style={{padding:100}}>
       <div id="content" align="center">
         <h1>Add Product</h1>
         <form onSubmit={(event) => {
@@ -30,8 +31,9 @@ class Main extends Component {
               placeholder="Product Price"
               required />
           </div>
-          <button type="submit" className="btn btn-primary">Add Product</button>
+          <button type="submit" className="btn btn-primary btn-block">Add Product</button>
         </form>
+        <hr width="100%" />
         <p> </p>
         <h2>Buy Product</h2>
         <table className="table">
@@ -64,6 +66,7 @@ class Main extends Component {
           })}
           </tbody>
         </table>
+      </div>
       </div>
     );
   }
