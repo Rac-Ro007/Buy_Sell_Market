@@ -4,13 +4,13 @@ import Web3 from 'web3';
 
 const web3 = new Web3(window.web3.currentProvider);
 
-const web3 = window.web3
+// const web3 = window.web3
     // check accounts
-const accounts = await web3.eth.getAccounts()
+const accounts = web3.eth.getAccounts()
 console.log(accounts)
 
-const address = accounts.address
-// const address = '0xb84b12e953f5bcf01b05f926728e855f2d4a67a9';
+// const address = accounts.address
+const address = '0xb84b12e953f5bcf01b05f926728e855f2d4a67a9';
 //use the ABI from your contract
 const abi = [
   {
@@ -42,4 +42,6 @@ const abi = [
     "type": "function"
   }
 ]
-export default new Web3.eth.Contract(abi, address);
+
+const storehash = web3.eth.Contract(abi, address);
+export default storehash

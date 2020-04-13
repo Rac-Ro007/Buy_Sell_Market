@@ -4,11 +4,33 @@ import './App.css';
 import Web3 from 'web3';
 import Navbar from './Navbar';
 //import logo from ‘./logo.svg’;
+import 'bootstrap/dist/css/bootstrap.css'
 import ipfs from './ipfs'
 import storehash from './storeHash'
+import { Button, Form, Container, Table } from 'react-bootstrap'
 
-class App extends Component {
+class Storage extends Component {
  
+    async componentWillMount(){
+        await this.loadWeb3()
+      }
+    web3 = new Web3(window.web3.currentProvider);
+
+    web3 = window.web3
+    
+    async loadWeb3() {
+       if (window.ethereum) {
+          window.web3 = new Web3(window.ethereum)
+          await window.ethereum.enable()
+        }
+        else if (window.web3) {
+          window.web3 = new Web3(window.web3.currentProvider)
+        }
+        else {
+          window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+        }
+      }
+
     state = {
       ipfsHash:null,
       buffer:'',
@@ -18,7 +40,7 @@ class App extends Component {
       gasUsed:'',
       txReceipt: ''   
     };
-    
+
 captureFile =(event) => {
         event.stopPropagation()
         event.preventDefault()
@@ -34,6 +56,7 @@ captureFile =(event) => {
         this.setState({buffer});
     };
 onClick = async () => {
+    const web3 = window.web3
 try{
         this.setState({blockNumber:"waiting.."});
         this.setState({gasUsed:"waiting..."});
@@ -51,6 +74,7 @@ await this.setState({blockNumber: this.state.txReceipt.blockNumber});
       } //catch
   } //onClick
 onSubmit = async (event) => {
+    const web3 = window.web3
       event.preventDefault();
      //bring in user's metamask account address
       const accounts = await web3.eth.getAccounts();
@@ -86,7 +110,7 @@ render() {
           </header>
           
           <hr />
-<Grid>
+<Container>
           <h3> Choose file to send to IPFS </h3>
           <Form onSubmit={this.onSubmit}>
             <input 
@@ -133,9 +157,9 @@ render() {
                 
                 </tbody>
             </Table>
-        </Grid>
+        </Container>
      </div>
       );
     } //render
 } //App
-export default App;
+export default Storage;
