@@ -3,17 +3,21 @@ import logo from '../logo.png';
 import './App.css';
 import Web3 from 'web3';
 import Navbar from './Navbar';
-//import logo from ‘./logo.svg’;
+import IpContract from '../abis/Contract.json'
 import 'bootstrap/dist/css/bootstrap.css'
 import ipfs from './ipfs'
-import storehash from './storeHash'
+// import storehash from './storeHash'
 import { Button, Form, Container, Table } from 'react-bootstrap'
 
 class Storage extends Component {
  
+  storehash=''
+  
     async componentWillMount(){
         await this.loadWeb3()
+        await this.loadBlockchainData()
       }
+    
     web3 = new Web3(window.web3.currentProvider);
 
     web3 = window.web3
@@ -30,7 +34,21 @@ class Storage extends Component {
           window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
         }
       }
-
+    
+      async loadBlockchainData() {
+        const web3 = window.web3
+        // check accounts
+        const accounts = await web3.eth.getAccounts()
+        console.log(accounts)
+        this.setState({ account : accounts[0]})
+        //get Net ID
+        const networkId = await web3.eth.net.getId()
+        // Attach marketplace with networks of NetID
+        const networkData = IpContract.networks[networkId]
+        //connect with abi on network
+        this.setState({networkData})
+      }
+    
     state = {
       ipfsHash:null,
       buffer:'',
@@ -38,7 +56,8 @@ class Storage extends Component {
       blockNumber:'',
       transactionHash:'',
       gasUsed:'',
-      txReceipt: ''   
+      txReceipt: '',
+      networkData:''   
     };
 
 captureFile =(event) => {
@@ -57,24 +76,30 @@ captureFile =(event) => {
     };
 onClick = async () => {
     const web3 = window.web3
-try{
+    try{
         this.setState({blockNumber:"waiting.."});
         this.setState({gasUsed:"waiting..."});
-//get Transaction Receipt in console on click
-//See: https://web3js.readthedocs.io/en/1.0/web3-eth.html#gettransactionreceipt
-await web3.eth.getTransactionReceipt(this.state.transactionHash, (err, txReceipt)=>{
+
+        //get Transaction Receipt in console on click
+        //See: https://web3js.readthedocs.io/en/1.0/web3-eth.html#gettransactionreceipt
+
+        await web3.eth.getTransactionReceipt(this.state.transactionHash, (err, txReceipt)=>{
           console.log(err,txReceipt);
           this.setState({txReceipt});
+
         }); //await for getTransactionReceipt
-await this.setState({blockNumber: this.state.txReceipt.blockNumber});
+        await this.setState({blockNumber: this.state.txReceipt.blockNumber});
         await this.setState({gasUsed: this.state.txReceipt.gasUsed});    
       } //try
+
     catch(error){
         console.log(error);
       } //catch
   } //onClick
 onSubmit = async (event) => {
     const web3 = window.web3
+    const address = '0xb84b12e953f5bcf01b05f926728e855f2d4a67a9';
+    const storehash = web3.eth.Contract(IpContract.abi, address)
       event.preventDefault();
      //bring in user's metamask account address
       const accounts = await web3.eth.getAccounts();
@@ -85,14 +110,14 @@ onSubmit = async (event) => {
       this.setState({ethAddress});
     //save document to IPFS,return its hash#, and set hash# to state
     //https://github.com/ipfs/interface-ipfs-core/blob/master/SPEC/FILES.md#add 
-      await ipfs.add(this.state.buffer, (err, ipfsHash) => {
+        await ipfs.add(this.state.buffer, (err, ipfsHash) => {
         console.log(err,ipfsHash);
         //setState by setting ipfsHash to ipfsHash[0].hash 
         this.setState({ ipfsHash:ipfsHash[0].hash });
-   // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract 
-  //return the transaction hash from the ethereum contract
- //see, this https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-send
-        
+        // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract 
+        //return the transaction hash from the ethereum contract
+      //see, this https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-send
+              
         storehash.methods.sendHash(this.state.ipfsHash).send({
           from: accounts[0] 
         }, (error, transactionHash) => {
@@ -104,7 +129,7 @@ onSubmit = async (event) => {
 render() {
       
       return (
-        <div className="App">
+        <div className="Container" align="center">
           <header className="App-header">
             <h1> Ethereum and IPFS with Create React App</h1>
           </header>
