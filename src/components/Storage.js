@@ -98,20 +98,21 @@ onClick = async () => {
   } //onClick
 onSubmit = async (event) => {
     const web3 = window.web3
-    const address = '0xb84b12e953f5bcf01b05f926728e855f2d4a67a9';
-    const storehash = web3.eth.Contract(IpContract.abi, address)
+    // const address = '0xb84b12e953f5bcf01b05f926728e855f2d4a67a9';
       event.preventDefault();
      //bring in user's metamask account address
       const accounts = await web3.eth.getAccounts();
      
       console.log('Sending from Metamask account: ' + accounts[0]);
+      const storehash = web3.eth.Contract(IpContract.abi, accounts[0]);
     //obtain contract address from storehash.js
       const ethAddress= await storehash.options.address;
       this.setState({ethAddress});
+      console.log('ethaddress' + ethAddress);
     //save document to IPFS,return its hash#, and set hash# to state
     //https://github.com/ipfs/interface-ipfs-core/blob/master/SPEC/FILES.md#add 
         await ipfs.add(this.state.buffer, (err, ipfsHash) => {
-        console.log(err,ipfsHash);
+        console.log('Error - '+ err +'IPHash' +ipfsHash);
         //setState by setting ipfsHash to ipfsHash[0].hash 
         this.setState({ ipfsHash:ipfsHash[0].hash });
         // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract 
@@ -119,7 +120,7 @@ onSubmit = async (event) => {
       //see, this https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-send
               
         storehash.methods.sendHash(this.state.ipfsHash).send({
-          from: accounts[0] 
+          from: accounts[0],gas:100000
         }, (error, transactionHash) => {
           console.log(transactionHash);
           this.setState({transactionHash});
