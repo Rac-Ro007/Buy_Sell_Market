@@ -55,7 +55,7 @@ class Main extends Component {
               <td>{product.owner}</td>
               <td>
                 {!product.purchased
-                  ? <button name={product.id} value={product.price} onClick={(event) => {
+                  ? <button className="btn btn-primary btn-block" name={product.id} value={product.price} onClick={(event) => {
                     this.state.purchaseProduct(event.target.name, event.target.value);
                   } }>
                                        Buy

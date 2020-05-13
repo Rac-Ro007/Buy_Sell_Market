@@ -33,7 +33,7 @@ class Navbar extends Component {
                 <Navbar1.Brand href="/">DeFleet Dapp Marketplace</Navbar1.Brand>
                 <Nav className="mr-auto">
                 <Nav.Link style={{}} href="#home">{this.props.account}</Nav.Link>
-                <Nav.Link href="home">IPFS Drive</Nav.Link>
+                <Nav.Link href="storage">IPFS Drive</Nav.Link>
                 <Nav.Link href="about">About</Nav.Link>
                 </Nav>
                 <Form inline>

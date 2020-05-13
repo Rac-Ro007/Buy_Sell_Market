@@ -130,6 +130,8 @@ onSubmit = async (event) => {
 render() {
       
       return (
+        <div>
+        < Navbar />
         <div className="Container" align="center">
           <header className="App-header">
             <h1> Ethereum and IPFS with Create React App</h1>
@@ -184,6 +186,7 @@ render() {
                 </tbody>
             </Table>
         </Container>
+     </div>
      </div>
       );
     } //render
