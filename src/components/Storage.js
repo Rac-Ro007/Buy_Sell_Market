@@ -133,12 +133,12 @@ render() {
         <div>
         < Navbar />
         <div className="Container" align="center">
-          <header className="App-header">
-            <h1> Ethereum and IPFS with Create React App</h1>
+<Container>
+<header className="App-header">
+            <h1> Upload Documents to IPFS</h1>
           </header>
           
           <hr />
-<Container>
           <h3> Choose file to send to IPFS </h3>
           <Form onSubmit={this.onSubmit}>
             <input 
@@ -153,6 +153,7 @@ render() {
           </Form>
 <hr/>
  <Button onClick = {this.onClick}> Get Transaction Receipt </Button>
+ <hr />
   <Table bordered responsive>
                 <thead>
                   <tr>
